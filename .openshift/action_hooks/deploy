@@ -1,0 +1,22 @@
+#!/bin/bash
+# This is a simple build script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the deploy step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+set -e
+
+if [ -d ${OPENSHIFT_DATA_DIR}site ]; then
+  echo 1>&2
+  echo "Site directory already exist. Removing installation files..." 1>&2
+  echo 1>&2
+
+  rm -f ${OPENSHIFT_REPO_DIR}php/install.php
+  rm -rf ${OPENSHIFT_REPO_DIR}php/site-*
+
+  # Create symlink to new directory location
+  ln -sf ${OPENSHIFT_DATA_DIR}site   ${OPENSHIFT_REPO_DIR}php/site
+  ln -sf ${OPENSHIFT_DATA_DIR}.htaccess   ${OPENSHIFT_REPO_DIR}php/.htaccess
+fi

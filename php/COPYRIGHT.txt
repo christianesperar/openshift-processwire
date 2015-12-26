@@ -1,0 +1,10 @@
+ProcessWire is Copyright 2015 by Ryan Cramer / Ryan Cramer Design, LLC
+Licensed under Mozilla Public License v2.0 
+http://mozilla.org/MPL/2.0/
+
+Some files in ProcessWire use different licenses, such as the MIT license
+for example. See individual files for details or look for LICENSE.* files
+in a given directory. If a non-minified file indicates no license and 
+copyright is not someone other than Ryan Cramer, the MPL 2.0 license may
+be assumed. 
+

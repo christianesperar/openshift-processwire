@@ -1,0 +1,20 @@
+#!/bin/bash
+# This is a simple build script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the deploy step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+set -e
+
+if [ ! -f ${OPENSHIFT_REPO_DIR}php/install.php ]; then
+  if [ ! -d ${OPENSHIFT_DATA_DIR}site ]; then
+    echo 1>&2
+    echo "Migrating site directory..." 1>&2
+    echo 1>&2
+
+    mv -uf ${OPENSHIFT_REPO_DIR}php/site ${OPENSHIFT_DATA_DIR}site
+    mv -uf ${OPENSHIFT_REPO_DIR}php/.htaccess ${OPENSHIFT_DATA_DIR}.htaccess
+  fi
+fi
