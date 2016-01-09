@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# The pre_start_cartridge and pre_stop_cartridge hooks are *SOURCED*
+# immediately before (re)starting or stopping the specified cartridge.
+# They are able to make any desired environment variable changes as
+# well as other adjustments to the application environment.
+
+# The post_start_cartridge and post_stop_cartridge hooks are executed
+# immediately after (re)starting or stopping the specified cartridge.
+
+# Exercise caution when adding commands to these hooks.  They can
+# prevent your application from stopping cleanly or starting at all.
+# Application start and stop is subject to different timeouts
+# throughout the system.
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+set -e
+
+if [ -d ${OPENSHIFT_DATA_DIR}site ]; then
+  echo 1>&2
+  echo "Site directory already exist. Removing installation files..." 1>&2
+  echo 1>&2
+
+  rm -f ${OPENSHIFT_REPO_DIR}php/install.php
+  rm -rf ${OPENSHIFT_REPO_DIR}php/site-*
+
+  # Create symlink to new directory location
+  ln -sf ${OPENSHIFT_DATA_DIR}site   ${OPENSHIFT_REPO_DIR}php/site
+  ln -sf ${OPENSHIFT_DATA_DIR}.htaccess   ${OPENSHIFT_REPO_DIR}php/.htaccess
+fi
